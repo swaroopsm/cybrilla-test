@@ -7,4 +7,15 @@ module Helper
     return args
   end
 
+  def unstringify(data)
+    hash = {}
+
+    data.split("|").each do |d|
+      splitted = d.split("=")
+      hash[splitted[0].strip] = splitted[1].strip
+    end
+
+    hash
+  end
+
 end

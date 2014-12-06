@@ -4,27 +4,28 @@ require "base64"
 module Encryptor
 
   KEY = "Q9fbkBF8au24C9wshGRW9ut8ecYpyXye5vhFLtHFdGjRg3a4HxPYRfQaKutZx5N4"
-  IV = "NONCE"
 
   def encrypt(data)
     cipher = OpenSSL::Cipher::AES.new(128, :CBC)
+    nonce = cipher.random_iv
     cipher.encrypt
     cipher.key = Encryptor::KEY
-    iv = Encryptor::IV
+    cipher.iv = nonce
     encrypted = cipher.update(data) + cipher.final
 
-    return Base64.encode64(encrypted)
+    return [ Base64.encode64(encrypted), nonce ]
   end
 
-  def decrypt(data)
+  def decrypt(_data)
+    data = Base64.decode64(_data)
     decipher = OpenSSL::Cipher::AES.new(128, :CBC)
     decipher.decrypt
     decipher.key = Encryptor::KEY
-    decipher.iv = Encryptor::IV
+    decipher.iv = @nonce
 
-    plain = decipher.update(data) + decipher.final
-
-    return plain
+    decrypted = decipher.update(data) + decipher.final
+ 
+    return decrypted
   end
 
 end

@@ -1,0 +1,15 @@
+---------------------------------------------------
+BANK DETAILS                                      |
+---------------------------------------------------
+IFSC Code: <%= transaction.bank.ifsc_code %>
+Account Number: <%= transaction.account.number %>
+
+---------------------------------------------------
+TRANSACTION DETAILS                               |
+---------------------------------------------------
+Date: <%= transaction.prettify_date %>
+Amount: <%= transaction.amount %>
+Merchant Transaction Reference: <%= transaction.merchant_transaction_ref %>
+Payment Gateway Merchant Reference: <%= transaction.payment_gateway_merchant_reference %>
+
+---- X ---- X ----

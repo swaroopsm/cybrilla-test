@@ -17,13 +17,11 @@ require "./lib/requester"
 @transaction.payment_gateway_merchant_reference = "merc001"
 @transaction.bank = @bank
 @transaction.account = @account
-@transaction.prepare_string
-p @transaction.hashify
-p @transaction.unhashify
 
 @requester = Requester.new
-@requester.options = {
-  :transaction => @transaction
-}
+@requester.transaction = @transaction
+
 @requester.url = "http://localhost:9292"
-@requester.process
+response = @requester.process
+
+print response.body
